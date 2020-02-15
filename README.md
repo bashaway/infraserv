@@ -1,19 +1,24 @@
 # network service servers
 
-|server|app|listen|
-|:-:|:-:|:-:|
-|proxy|squid|8080/tcp|
-|syslog|rsyslog|514/udp|
-|radius|freeRADIUS|1812/udp|
-|dhcp|ISC-Kea|67/udp|
-|tftp|tftp-server|69/udp|
-
+Network Parameters
 
 |key|value|
 |:-:|:-:|
 |name|infraserv_infranet|
 |subnet|172.20.0.0/24|
 |interface|docker1|
+
+Container Parameters
+
+|server|app|address|listen|
+|:-:|:-:|:-:|:-:|
+|proxy|squid|172.20.0.2|8080/tcp|
+|syslog|rsyslog|172.20.0.3|514/udp|
+|radius|freeRADIUS|172.20.0.4|1812/udp|
+|dhcp|ISC-Kea|172.20.0.5|67/udp|
+|tftp|tftp-server|-|69/udp|
+
+
 
 ```
 # ip add
@@ -116,13 +121,13 @@ docker-compose up -d
 
 # remove servers
 
-# STOP and REMOVE All Containers
+## STOP and REMOVE All Containers
 ```
 docker-compose stop
 docker-compose rm -f
 ```
 
-# REMOVE All IMAGES
+## REMOVE All IMAGES
 ```
 docker-compose rmi -f
 ```
