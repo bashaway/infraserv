@@ -1,0 +1,11 @@
+/var/log/remotelog/*.log {
+        daily
+        rotate 40
+        compress
+        missingok
+        notifempty
+        postrotate
+          /bin/systemctl restart rsyslog
+        endscript
+}
+

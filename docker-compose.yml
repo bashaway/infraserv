@@ -1,0 +1,112 @@
+version: '3'
+
+services:
+
+  proxy:
+    build: ./proxy
+    image: infraserv:proxy
+    container_name: proxy
+    hostname: proxy
+    restart: always
+    networks:
+      infranet:
+        ipv4_address: 172.20.0.2
+    ports:
+      - 8080:8080
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    environment:
+      TZ: 'Asia/Tokyo'
+
+  syslog:
+    build: ./syslog
+    image: infraserv:syslog
+    container_name: syslog
+    hostname: syslog
+    restart: always
+    networks:
+      infranet:
+        ipv4_address: 172.20.0.3
+    ports:
+      - 514:514/udp
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    environment:
+      TZ: 'Asia/Tokyo'
+
+  radius:
+    build: ./radius
+    image: infraserv:radius
+    container_name: radius
+    hostname: radius
+    restart: always
+    networks:
+      infranet:
+        ipv4_address: 172.20.0.4
+    ports:
+      - 1812:1812/udp
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    environment:
+      TZ: 'Asia/Tokyo'
+
+  dhcp:
+    build: ./dhcp
+    image: infraserv:dhcp
+    container_name: dhcp
+    hostname: dhcp
+    restart: always
+    networks:
+      infranet:
+        ipv4_address: 172.20.0.5
+    ports:
+      - 67:67/udp
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    environment:
+      TZ: 'Asia/Tokyo'
+
+  tftp:
+    build: ./tftp
+    image: infraserv:tftp
+    container_name: tftp
+    hostname: tftp
+    restart: always
+    network_mode: host
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    environment:
+      TZ: 'Asia/Tokyo'
+
+
+networks:
+  infranet:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: "true"
+      com.docker.network.bridge.host_binding_ipv4: "0.0.0.0"
+      com.docker.network.bridge.name: "docker1"
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+

@@ -1,0 +1,6 @@
+DEFAULT Auth-Type == PAP
+        Tunnel-Type := 13 , Tunnel-Medium-Type := 6 , Tunnel-Private-Group-Id := "default_seg",
+        Fall-Through = Yes
+112233445566 Cleartext-Password := "112233445566" , NAS-Port-Type == Ethernet
+aabbccddeeff Cleartext-Password := "aabbccddeeff" , NAS-Port-Type == Ethernet
+
