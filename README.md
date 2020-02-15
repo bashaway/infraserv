@@ -95,10 +95,6 @@ chmod +x /usr/local/bin/docker-compose
 
 # Firewall Policy add
 ```
-firewall-cmd --add-port=8080/tcp  --zone=public --permanent
-firewall-cmd --add-service=syslog --zone=public --permanent
-firewall-cmd --add-service=radius --zone=public --permanent
-firewall-cmd --add-service=dhcp   --zone=public --permanent
 firewall-cmd --add-service=tftp   --zone=public --permanent
 firewall-cmd --add-masquerade --permanent
 firewall-cmd --reload
