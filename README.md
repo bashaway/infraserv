@@ -127,9 +127,9 @@ docker-compose stop
 docker-compose rm -f
 ```
 
-## REMOVE All IMAGES
+## Stop and remove containers, networks, images, and volumes
 ```
-docker-compose rmi -f
+docker-compose down
 ```
 
 ## docker command : Clean Up All Container and Images
