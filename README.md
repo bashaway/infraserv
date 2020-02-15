@@ -1,4 +1,52 @@
+# network service servers
+
+## proxy
+
+squid proxy server
+
+listen: 8080/tcp
+
+
+## syslog
+
+rsyslog
+
+listen: 514/udp
+
+
+## radius
+
+freeradius
+
+listen: 1812/udp
+
+
+## dhcp
+
+kea-dhcp
+
+listen : 67/udp
+
+
+## tftp
+
+tftp-server + xinetd
+
+listen : 69/udp
+
+
+## docker network
+
+name: infraserv_infranet
+subnet: 172.20.0.0/24
+host if name: docker1
+
+
+
 # Install Docker
+
+## DockerCE
+
 ```
 dnf -y update
 dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
@@ -9,22 +57,10 @@ systemctl enable docker
 systemctl start docker
 ```
 
-# Install Docker Compose
+## Docker Compose
 ```
 sudo curl -L "https://github.com/docker/compose/releases/download/1.25.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
-```
-
-# git clone
-```
-git clone https://github.com/bashaway/infraserv
-```
-
-# Build and Start Containers
-```
-cd infraserv
-docker-compose build
-docker-compose up -d
 ```
 
 # Firewall Policy add
@@ -38,16 +74,22 @@ firewall-cmd --add-masquerade --permanent
 firewall-cmd --reload
 ```
 
-# Build Images
+
+# build servers
+
+## git clone
 ```
-docker-compose build
+git clone https://github.com/bashaway/infraserv
 ```
 
-# START All Containers
+## Build and Start Containers
 ```
+cd infraserv
+docker-compose build
 docker-compose up -d
-docker-compose ps
 ```
+
+# remove servers
 
 # STOP and REMOVE All Containers
 ```
