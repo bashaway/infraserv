@@ -16,7 +16,7 @@ Container Parameters
 |syslog|rsyslog|172.20.0.3|514/udp|
 |radius|freeRADIUS|172.20.0.4|1812,1813/udp|
 |dns|unbound|172.20.0.5|53/tcp,udp|
-|dhcp|ISC-Kea||67,68/udp|
+|dhcp|ISC-Kea|-|67,68/udp|
 |tftp|tftp-server|-|69/udp|
 
 
@@ -125,6 +125,7 @@ chmod +x /usr/local/bin/docker-compose
 
 # Firewall Policy add
 ```
+firewall-cmd --add-service=dhcp   --zone=public --permanent
 firewall-cmd --add-service=tftp   --zone=public --permanent
 firewall-cmd --add-masquerade --permanent
 firewall-cmd --reload
@@ -160,7 +161,7 @@ docker-compose down
 
 ## docker command : Clean Up All Container and Images
 ```
-docker ps -aq | xargs docker rm -f 
+docker ps -aq | xargs docker rm -f ; \
 docker images -aq | xargs docker rmi
 ```
 
