@@ -1,0 +1,11 @@
+/var/log/kea/*.log {
+        daily
+        rotate 8
+        compress
+        missingok
+        notifempty
+        postrotate
+          /bin/systemctl restart rsyslog
+        endscript
+}
+

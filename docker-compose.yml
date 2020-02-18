@@ -53,6 +53,7 @@ services:
         ipv4_address: 172.20.0.4
     ports:
       - 1812:1812/udp
+      - 1813:1813/udp
     cap_add:
       - SYS_ADMIN
     security_opt:
@@ -62,17 +63,18 @@ services:
     environment:
       TZ: 'Asia/Tokyo'
 
-  dhcp:
-    build: ./dhcp
-    image: infraserv:dhcp
-    container_name: dhcp
-    hostname: dhcp
+  dns:
+    build: ./dns
+    image: infraserv:dns
+    container_name: dns
+    hostname: dns
     restart: always
     networks:
       infranet:
         ipv4_address: 172.20.0.5
     ports:
-      - 67:67/udp
+      - 53:53/udp
+      - 53:53/tcp
     cap_add:
       - SYS_ADMIN
     security_opt:
@@ -87,6 +89,22 @@ services:
     image: infraserv:tftp
     container_name: tftp
     hostname: tftp
+    restart: always
+    network_mode: host
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    environment:
+      TZ: 'Asia/Tokyo'
+
+  dhcp:
+    build: ./dhcp
+    image: infraserv:dhcp
+    container_name: dhcp
+    hostname: dhcp
     restart: always
     network_mode: host
     cap_add:
