@@ -162,7 +162,8 @@ docker-compose down
 ## docker command : Clean Up All Container and Images
 ```
 docker ps -aq | xargs docker rm -f ; \
-docker images -aq | xargs docker rmi
+docker images -aq | xargs docker rmi ;\
+docker volume ls -qf dangling=true | xargs -r docker volume rm
 ```
 
 # ref
